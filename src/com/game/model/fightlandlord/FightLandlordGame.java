@@ -1,8 +1,8 @@
 package com.game.model.fightlandlord;
 
-import com.game.model.Game;
 import com.game.model.plaything.PokerColor;
 import com.game.model.plaything.PokerValue;
+import com.game.pokerclient.model.Game;
 
 /**
  * Players: P1, P2, P3

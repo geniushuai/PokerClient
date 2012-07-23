@@ -3,6 +3,7 @@ package com.game.model.fightlandlord;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import com.game.model.plaything.PokerColor;
@@ -127,4 +128,57 @@ public class FightLandlordPoker {
 	public static FightLandlordPoker[][] shuffle(String cheatCards) {
 		return null;
 	}
+	
+	
+	
+	public static List<String> sortPokers(String cards)
+	{
+		List<String> cardArray = Arrays.asList(cards.split(","));
+		Comparator<String> cardSort = new Comparator<String>() {
+			/**
+			 *
+			 * @param card1
+			 * @param card2
+			 * @return
+			 *
+			 */
+			@Override
+			public int compare(String card1, String card2)
+			{
+				if (card1 == card2)
+				{
+					// 值与花色都相同时
+					return 0;
+				}
+				// 实现排序功能
+				int pri1 = prioritySequence.indexOf(card1.replaceAll("^[0-4]", ""));
+				int pri2 = prioritySequence.indexOf(card2.replaceAll("^[0-4]", ""));
+				// 值比较
+				if (pri1 > pri2)
+				{
+					return 1;
+				}
+				else if (pri1 < pri2)
+				{
+					return -1;
+				}
+				// 值相同时，进行花色比较
+				if (card1.charAt(0) > card2.charAt(0))
+				{
+					return 1;
+				}
+				else if (card1.charAt(0) < card2.charAt(0))
+				{
+					return -1;
+				}
+				return 0;
+			}
+
+		};
+		Collections.sort(cardArray, cardSort);
+		return cardArray;
+	}
+	
+	
+	
 }

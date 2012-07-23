@@ -18,25 +18,24 @@ public final class R {
     public static final class drawable {
         public static final int ic_action_search=0x7f020000;
         public static final int ic_launcher=0x7f020001;
-        public static final int va1=0x7f020002;
     }
     public static final class id {
-        public static final int btnCancel=0x7f080008;
-        public static final int btnOut=0x7f08000a;
-        public static final int btnReset=0x7f080007;
-        public static final int btnRun=0x7f080005;
-        public static final int btnTip=0x7f080009;
-        public static final int buttonsBar=0x7f080006;
-        public static final int dealedBottom=0x7f08000e;
-        public static final int dealedLayout=0x7f08000b;
-        public static final int dealedLeft=0x7f08000c;
-        public static final int dealedRight=0x7f08000d;
+        public static final int btnCancel=0x7f080004;
+        public static final int btnOut=0x7f080006;
+        public static final int btnReset=0x7f080003;
+        public static final int btnRun=0x7f080001;
+        public static final int btnTip=0x7f080005;
+        public static final int buttonsBar=0x7f080002;
+        public static final int candidatedDown=0x7f08000e;
+        public static final int candidatedLeft=0x7f08000b;
+        public static final int candidatedRight=0x7f08000c;
+        public static final int candidatedTop=0x7f08000d;
+        public static final int dealedBottom=0x7f08000a;
+        public static final int dealedLayout=0x7f080007;
+        public static final int dealedLeft=0x7f080008;
+        public static final int dealedRight=0x7f080009;
         public static final int main_layout=0x7f080000;
         public static final int menu_settings=0x7f08000f;
-        public static final int scrollViewBottom=0x7f080004;
-        public static final int scrollViewLeft=0x7f080001;
-        public static final int scrollViewRight=0x7f080002;
-        public static final int scrollViewTop=0x7f080003;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
@@ -46,12 +45,13 @@ public final class R {
     }
     public static final class string {
         public static final int app_name=0x7f050000;
-        public static final int btn_cancel=0x7f050007;
-        public static final int btn_exit=0x7f050005;
-        public static final int btn_out=0x7f050009;
-        public static final int btn_reset=0x7f050006;
+        public static final int btn_cancel=0x7f050008;
+        public static final int btn_exit=0x7f050006;
+        public static final int btn_out=0x7f05000a;
+        public static final int btn_reset=0x7f050007;
+        public static final int btn_restart=0x7f050005;
         public static final int btn_start=0x7f050004;
-        public static final int btn_tip=0x7f050008;
+        public static final int btn_tip=0x7f050009;
         public static final int hello_world=0x7f050001;
         public static final int menu_settings=0x7f050002;
         public static final int title_activity_main=0x7f050003;
