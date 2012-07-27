@@ -3,6 +3,7 @@ package com.game.model.fightlandlord;
 import com.game.model.plaything.PokerColor;
 import com.game.model.plaything.PokerValue;
 import com.game.pokerclient.model.Game;
+import com.game.pokerclient.model.Player;
 
 /**
  * Players: P1, P2, P3
@@ -63,6 +64,24 @@ public class FightLandlordGame extends Game<FightLandlordGameSetting> {
 	 */
 	public void addMultiple() {
 		multiple *= 2;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.game.pokerclient.model.Game#persistScore()
+	 */
+	@Override
+	public void persistScore() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see com.game.pokerclient.model.Game#persistDisconnectScore(com.game.pokerclient.model.Player)
+	 */
+	@Override
+	public void persistDisconnectScore(Player disconnectedPlayer) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -15,11 +15,11 @@
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name=".state.PokerService"   android:exported="true"></service>
+        <activity android:name=".FightLandLordActivity" android:label="@string/title_fightlandlord_main"/>
+        <service android:name=".state.PokerService"  android:exported="true"></service>
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.VIBRATE" />	

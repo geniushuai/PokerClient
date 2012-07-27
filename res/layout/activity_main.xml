@@ -4,125 +4,79 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
-
-    <Button
-        android:id="@+id/btnRun"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:text="@string/btn_start" />
-
-    <LinearLayout
-        android:id="@+id/buttonsBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="35dp"
-        android:clipChildren="false"
-        android:gravity="center_vertical|center_horizontal"
-        android:orientation="horizontal" >
-
-        <Button
-            android:id="@+id/btnReset"
-            android:layout_width="50dp"
-            android:layout_height="35dp"
-            android:text="@string/btn_reset" />
-
-        <Button
-            android:id="@+id/btnCancel"
-            android:layout_width="50dp"
-            android:layout_height="35dp"
-            android:text="@string/btn_cancel" />
-
-        <Button
-            android:id="@+id/btnTip"
-            android:layout_width="50dp"
-            android:layout_height="35dp"
-            android:text="@string/btn_tip" />
-
-        <Button
-            android:id="@+id/btnOut"
-            android:layout_width="50dp"
-            android:layout_height="35dp"
-            android:text="@string/btn_out" />
-    </LinearLayout>
-
-    <FrameLayout
-        android:id="@+id/dealedLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_margin="50dp">
-        <FrameLayout
-            android:id="@+id/dealedLeft"
+        <LinearLayout
+            android:id="@+id/linearLayoutLeft"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="left"
-            android:orientation="vertical" >
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/dealedRight"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="right"
-            android:orientation="vertical" >
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/dealedBottom"
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginLeft="60dp"
-            android:layout_marginRight="60dp"  >
-        </FrameLayout>
-    </FrameLayout>
+            android:layout_alignParentLeft="true" >
+
+            <ImageView
+                android:id="@+id/imageViewLeft"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:src="@drawable/game_curtain_left" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayoutRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true">
+
+            <ImageView
+                android:id="@+id/imageViewRight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:src="@drawable/game_curtain_right" />
+
+        </LinearLayout>
 
     <FrameLayout
-        android:id="@+id/candidatedLeft"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="20dp" >
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/linearLayoutRight"
+        android:layout_toRightOf="@+id/linearLayoutLeft" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/btnGameStart"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_gamestart" />
+
+            <Button
+                android:id="@+id/btnGameOption"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_gameoption" />
+
+            <Button
+                android:id="@+id/btnGameHelp"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_gamehelp" />
+
+            <Button
+                android:id="@+id/btnGameExit"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_gameexit" />
+
+        </LinearLayout>
 
     </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/candidatedRight"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="20dp"
-        android:orientation="vertical" >
-
-    </FrameLayout>
-
-    <LinearLayout
-        android:id="@+id/candidatedTop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:padding="10dp"
-		android:layout_centerHorizontal="true" >
-
-    </LinearLayout>
-
-    <FrameLayout
-        android:id="@+id/candidatedDown"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:gravity="bottom"
-		android:layout_centerHorizontal="true"  >
-
-
-    </FrameLayout>
-
+   
 </RelativeLayout>
