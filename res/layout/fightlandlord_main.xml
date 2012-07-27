@@ -1,0 +1,97 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <Button
+        android:id="@+id/btnRun"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/btn_start" />
+
+        <include layout="@layout/button_bar" android:id="@+id/buttonsBar"/>
+
+    <FrameLayout
+        android:id="@+id/dealedLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="80dp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="80dp"
+        android:layout_marginTop="80dp" >
+
+        <FrameLayout
+            android:id="@+id/dealedLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="left"
+            android:orientation="vertical" >
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/dealedRight"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:orientation="vertical" >
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/dealedBottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp"  >
+        </FrameLayout>
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/candidatedLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp" >
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/candidatedRight"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical" >
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/candidatedTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:padding="10dp"
+		android:layout_centerHorizontal="true" >
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/candidatedDown"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignTop="@+id/buttonsBar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:gravity="bottom" >
+
+    </FrameLayout>
+
+</RelativeLayout>
