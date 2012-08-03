@@ -11,25 +11,29 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.game.model.fightlandlord.FightLandlordPoker;
-import com.game.pokerclient.component.PokerButton;
-import com.game.pokerclient.state.PokerService;
-
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.view.Gravity;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import com.game.model.fightlandlord.FightLandlordPoker;
+import com.game.pokerclient.component.PokerButton;
+import com.game.pokerclient.constant.GameConstant;
+import com.game.pokerclient.state.PokerService;
+import com.game.pokerclient.thread.ProcessTask;
 
 /**
  * Class Description
@@ -43,34 +47,52 @@ import android.widget.RelativeLayout;
  * 
  *</pre>
  */
-public class FightLandLordActivity extends Activity implements OnClickListener {
+public class FightLandLordActivity extends BaseActivity implements OnClickListener {
 
 	private FrameLayout framelayout;
 	private Button btnRun;
 	private PokerService pokerService;
 	private final static int OFFSET_SIZE = 10;
+	private ArrayList<String> data;
+	private ProgressBar pb;
+	private TextView tv;
 
-	private ServiceConnection serviceConnection = new ServiceConnection() {
-		public void onServiceConnected(ComponentName name, IBinder service) {
-			pokerService = ((PokerService.PokerBinder) service).getService();
-			Map<Integer, String> playerPokers = pokerService.getFightLandlordPoker();
-			initPoker(playerPokers);
-		}
-
-		public void onServiceDisconnected(ComponentName name) {
-
-		}
-	};
+	private ServiceConnection serviceConnection;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.fightlandlord_main);
+		setContext(this);
+		initServiceConnection();
 		setupViews();
 	}
 	
+	/**
+	 * Method Description;
+	 *
+	 */
+	private void initServiceConnection() {
+		serviceConnection = new ServiceConnection() {
+			public void onServiceConnected(ComponentName name, IBinder service) {
+				pokerService = ((PokerService.PokerBinder) service).getService();
+				Map<Integer, String> playerPokers = pokerService.getFightLandlordPoker();
+				initPoker(playerPokers);
+			}
+
+			public void onServiceDisconnected(ComponentName name) {
+				pokerService = null;
+			}
+		};
+		
+	}
+
 	public void setupViews(){  
+		final SharedPreferences prefs = this.getSharedPreferences(GameConstant.PREFS_NAME, 0);
+		String userName = prefs.getString("userName", "");
+		TextView textView = (TextView)findViewById(R.id.txtWelcome);
+		textView.setText("Welcome," + userName);
 		btnRun = (Button) findViewById(R.id.btnRun);
 		btnRun.setOnClickListener(this);
 		
@@ -81,6 +103,10 @@ public class FightLandLordActivity extends Activity implements OnClickListener {
 				button.setOnClickListener(this);
 			}
 		}
+		
+		pb=(ProgressBar)findViewById(R.id.pb);  
+		tv=(TextView)findViewById(R.id.tv);
+		
 	}
 
 	/*
@@ -96,6 +122,13 @@ public class FightLandLordActivity extends Activity implements OnClickListener {
 				startService(intent);
 				bindService(intent, serviceConnection, BIND_AUTO_CREATE);
 				btnRun.setText(R.string.btn_restart);
+				
+				data = new ArrayList<String>(); 
+				ProcessTask processTask = new ProcessTask();
+				processTask.setActivity(this);
+				processTask.setPb(pb);
+				processTask.setTv(tv);
+				processTask.execute(100);
 			} else {
 				reset();
 				Intent intent = new Intent(this, PokerService.class);
@@ -154,7 +187,7 @@ public class FightLandLordActivity extends Activity implements OnClickListener {
 				unDealedCards.add(pokerButton);
 			}
 		}
-		// 重截手中牌区
+		// 重载手中牌区
 		candidatedDown.removeAllViews();
 		for (PokerButton pb : unDealedCards) {
 			FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) pb.getLayoutParams();
@@ -225,11 +258,12 @@ public class FightLandLordActivity extends Activity implements OnClickListener {
 		super.onDestroy();
 		// unbind the service and null it out.
 		if (serviceConnection != null) {
-			unbindService(serviceConnection);
+			if (btnRun.getText().equals(getText(R.string.btn_restart))) {
+				unbindService(serviceConnection);
+			}
 			serviceConnection = null;
 		}
 	}
-	
 	
 }
 

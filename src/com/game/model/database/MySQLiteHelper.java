@@ -66,6 +66,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 	public MySQLiteHelper(Context context, String name, CursorFactory factory,
 			int version) {
 		super(context, name, factory, version);
+		this.context = context;
 		// TODO Auto-generated constructor stub
 	}
 

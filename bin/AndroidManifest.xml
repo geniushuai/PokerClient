@@ -19,6 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".FightLandLordActivity" android:label="@string/title_fightlandlord_main"/>
+        <activity android:name=".PlayerActivity" android:label="@string/title_user_main"/>
         <service android:name=".state.PokerService"  android:exported="true"></service>
     </application>
     <uses-permission android:name="android.permission.INTERNET" />

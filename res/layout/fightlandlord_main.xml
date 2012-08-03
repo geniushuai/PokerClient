@@ -3,7 +3,6 @@
     android:id="@+id/main_layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
-
     <Button
         android:id="@+id/btnRun"
         android:layout_width="wrap_content"
@@ -48,6 +47,11 @@
             android:layout_marginLeft="60dp"
             android:layout_marginRight="60dp"  >
         </FrameLayout>
+
+        <include
+            android:id="@+id/processBar"
+            layout="@layout/progress_bar" />
+
     </FrameLayout>
 
     <FrameLayout
@@ -93,5 +97,13 @@
         android:gravity="bottom" >
 
     </FrameLayout>
+
+    <TextView
+        android:id="@+id/txtWelcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="Welcome," />
 
 </RelativeLayout>

@@ -49,8 +49,8 @@ public class PlayerDataSource {
 	// Database fields
     private SQLiteDatabase database;
     private MySQLiteHelper dbHelper;
-    private String[] allColumns = { COLUMN_PROFILE_ID,
-                COLUMN_NUMBER };
+	private String[] allColumns = { COLUMN_PROFILE_ID, COLUMN_NUMBER,
+			COLUMN_NAME, COLUMN_USER_ID, COLUMN_CURRENT_SCORE,COLUMN_INIT_LIMIT,COLUMN_LEVEL,COLUMN_RLS_PATH,COLUMN_ROLE,COLUMN_STATUS  };
     
     public PlayerDataSource(Context context) {
     	dbHelper = new MySQLiteHelper(context, MySQLiteHelper.DATABASE_NAME, null, MySQLiteHelper.DATABASE_VERSION);
@@ -64,9 +64,22 @@ public class PlayerDataSource {
     	dbHelper.close();
     }
     
-    public Player createPlayer(String player) {
+    public Player createPlayer(String userName, String password, String name) {
     	ContentValues values = new ContentValues();
-    	values.put(COLUMN_NUMBER, player);
+    	values.put(COLUMN_NUMBER, "");
+    	values.put(COLUMN_NAME, name);
+    	values.put(COLUMN_USER_ID, userName);
+    	values.put(COLUMN_PASSWORD, password);
+    	values.put(COLUMN_CURRENT_SCORE, 0);
+    	values.put(COLUMN_INIT_LIMIT, "");
+    	values.put(COLUMN_LEVEL, "");
+    	values.put(COLUMN_RLS_PATH, "a");
+    	values.put(COLUMN_ROLE, "r");
+    	values.put(COLUMN_STATUS, "");
+    	values.put(COLUMN_CREATE_TIME, "");
+    	values.put(COLUMN_CREATE_BY, "");
+    	values.put(COLUMN_UPDATE_TIME, "");
+    	values.put(COLUMN_UPDATE_BY, "");
     	
     	long insertId = database.insert(MySQLiteHelper.TABLE_PLAYERS, null, values);
     	
@@ -81,7 +94,7 @@ public class PlayerDataSource {
     public Player cursorToPlayer(Cursor cursor) {
     	Player player = new Player();
     	player.setId(cursor.getString(0));
-    	player.setName(cursor.getString(1));
+    	player.setName(cursor.getString(2));
     	return player;
     }
     
@@ -105,5 +118,18 @@ public class PlayerDataSource {
     	}
     	cursor.close();
     	return players;
+    }
+    
+    public Player getPlayer(String userName, String password) {
+    	Player player = null;
+    	String selection = COLUMN_USER_ID + "=? and " + COLUMN_PASSWORD + "=?" ;  
+    	String[] selectionArgs = new  String[]{ userName, password };  
+    	Cursor cursor = database.query(MySQLiteHelper.TABLE_PLAYERS, allColumns, selection, selectionArgs, null, null, null);
+    	
+    	if (cursor.moveToFirst()) {
+    		player = cursorToPlayer(cursor);
+    	}
+    	cursor.close();
+    	return player;
     }
 }

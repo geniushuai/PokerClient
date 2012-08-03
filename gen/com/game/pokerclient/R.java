@@ -16,28 +16,30 @@ public final class R {
         public static final int padding_small=0x7f040000;
     }
     public static final class drawable {
-        public static final int game_curtain_left=0x7f020000;
-        public static final int game_curtain_right=0x7f020001;
-        public static final int ic_action_search=0x7f020002;
-        public static final int ic_launcher=0x7f020003;
+        public static final int exit=0x7f020000;
+        public static final int game_curtain_left=0x7f020001;
+        public static final int game_curtain_right=0x7f020002;
+        public static final int ic_action_search=0x7f020003;
+        public static final int ic_launcher=0x7f020004;
     }
     public static final class id {
-        public static final int btnAddUser=0x7f080017;
+        public static final int btnAddUser=0x7f080030;
         public static final int btnCancel=0x7f08000a;
-        public static final int btnDeleteUser=0x7f080018;
+        public static final int btnFindPwd=0x7f080023;
         public static final int btnGameExit=0x7f080008;
         public static final int btnGameHelp=0x7f080007;
         public static final int btnGameOption=0x7f080006;
         public static final int btnGameStart=0x7f080005;
+        public static final int btnLogin=0x7f080022;
         public static final int btnOut=0x7f08000c;
         public static final int btnReset=0x7f080009;
         public static final int btnRun=0x7f08000d;
         public static final int btnTip=0x7f08000b;
         public static final int buttonsBar=0x7f08000e;
-        public static final int candidatedDown=0x7f080016;
-        public static final int candidatedLeft=0x7f080013;
-        public static final int candidatedRight=0x7f080014;
-        public static final int candidatedTop=0x7f080015;
+        public static final int candidatedDown=0x7f080017;
+        public static final int candidatedLeft=0x7f080014;
+        public static final int candidatedRight=0x7f080015;
+        public static final int candidatedTop=0x7f080016;
         public static final int dealedBottom=0x7f080012;
         public static final int dealedLayout=0x7f08000f;
         public static final int dealedLeft=0x7f080010;
@@ -47,34 +49,59 @@ public final class R {
         public static final int linearLayoutLeft=0x7f080001;
         public static final int linearLayoutRight=0x7f080003;
         public static final int main_layout=0x7f080000;
-        public static final int menu_settings=0x7f080019;
+        public static final int menu_settings=0x7f080031;
+        public static final int pb=0x7f08001a;
+        public static final int processBar=0x7f080013;
+        public static final int tableRow1=0x7f080024;
+        public static final int tableRow2=0x7f080027;
+        public static final int tableRow3=0x7f08002a;
+        public static final int tableRow4=0x7f08002d;
+        public static final int tableRow5=0x7f08001b;
+        public static final int tableRow6=0x7f08001e;
+        public static final int tableRow7=0x7f080021;
+        public static final int textView1=0x7f080025;
+        public static final int textView2=0x7f080028;
+        public static final int textView3=0x7f08002b;
+        public static final int textView4=0x7f08001c;
+        public static final int textView5=0x7f08001f;
+        public static final int textViewnc=0x7f08002e;
+        public static final int tv=0x7f080019;
+        public static final int txtLoginPwd=0x7f080020;
+        public static final int txtLoginUser=0x7f08001d;
+        public static final int txtName=0x7f08002f;
+        public static final int txtPwd=0x7f080029;
+        public static final int txtRePwd=0x7f08002c;
+        public static final int txtUserName=0x7f080026;
+        public static final int txtWelcome=0x7f080018;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
         public static final int button_bar=0x7f030001;
         public static final int fightlandlord_main=0x7f030002;
-        public static final int user_main=0x7f030003;
+        public static final int progress_bar=0x7f030003;
+        public static final int user_main=0x7f030004;
     }
     public static final class menu {
         public static final int activity_main=0x7f070000;
     }
     public static final class string {
         public static final int app_name=0x7f050000;
-        public static final int btn_cancel=0x7f05000d;
-        public static final int btn_exit=0x7f050007;
-        public static final int btn_gameexit=0x7f05000b;
-        public static final int btn_gamehelp=0x7f050009;
-        public static final int btn_gameoption=0x7f05000a;
-        public static final int btn_gamestart=0x7f050008;
-        public static final int btn_out=0x7f05000f;
-        public static final int btn_reset=0x7f05000c;
-        public static final int btn_restart=0x7f050006;
-        public static final int btn_start=0x7f050005;
-        public static final int btn_tip=0x7f05000e;
+        public static final int btn_cancel=0x7f05000e;
+        public static final int btn_exit=0x7f050008;
+        public static final int btn_gameexit=0x7f05000c;
+        public static final int btn_gamehelp=0x7f05000a;
+        public static final int btn_gameoption=0x7f05000b;
+        public static final int btn_gamestart=0x7f050009;
+        public static final int btn_out=0x7f050010;
+        public static final int btn_reset=0x7f05000d;
+        public static final int btn_restart=0x7f050007;
+        public static final int btn_start=0x7f050006;
+        public static final int btn_tip=0x7f05000f;
         public static final int hello_world=0x7f050001;
         public static final int menu_settings=0x7f050002;
         public static final int title_activity_main=0x7f050003;
         public static final int title_fightlandlord_main=0x7f050004;
+        public static final int title_user_main=0x7f050005;
     }
     public static final class style {
         public static final int AppTheme=0x7f060000;

@@ -1,24 +1,27 @@
 package com.game.pokerclient;
 
-import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.Toast;
 
-public class MainActivity extends Activity implements OnClickListener {
+import com.game.pokerclient.constant.GameConstant;
+
+public class MainActivity extends BaseActivity implements OnClickListener {
 
 	private Button btnGameStart;
 	private Button btnGameExit;
 	private Button btnGameOption;
 	private Button btnGameHelp;
-
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		setContext(this);
 		setupViews();
 	}
 	
@@ -43,20 +46,28 @@ public class MainActivity extends Activity implements OnClickListener {
 	public void onClick(View view) {
 		switch (view.getId()) {
 		case R.id.btnGameStart:
-			Intent intent = new Intent(this, FightLandLordActivity.class);
-			startActivity(intent);
+			final SharedPreferences prefs = getContext().getSharedPreferences(GameConstant.PREFS_NAME, 0);
+			if (prefs.getString("userName", "").length() > 0) {
+				Intent intent = new Intent(this, FightLandLordActivity.class);
+				startActivity(intent);
+			} else {
+				Intent intent = new Intent(this, PlayerActivity.class);
+				startActivity(intent);
+			}
 			break;
 		case R.id.btnGameExit:
-			finish();
+			dialog("Exit Game", "是否退出？", new DialogInterface.OnClickListener()
+			{
+				@Override
+					public void onClick(DialogInterface dialog, int which) {
+						finish();    
+					}
+			});
 			break;
 		default:
 			showToast("暂未开通！");
 			break;
 		}
-	}
-	
-	public void showToast(final String text) {
-		Toast.makeText(getApplicationContext(), text,	Toast.LENGTH_SHORT).show();
 	}
 	
 }
