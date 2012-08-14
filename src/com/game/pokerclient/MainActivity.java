@@ -64,6 +64,10 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 					}
 			});
 			break;
+		case R.id.btnGameOption:
+			Intent intent = new Intent(this, GameOptionActivity.class);
+			startActivity(intent);
+			break;
 		default:
 			showToast("暂未开通！");
 			break;

@@ -20,11 +20,15 @@
         </activity>
         <activity android:name=".FightLandLordActivity" android:label="@string/title_fightlandlord_main"/>
         <activity android:name=".PlayerActivity" android:label="@string/title_user_main"/>
+        <activity android:name=".GameOptionActivity" android:label="@string/menu_settings"/>
         <service android:name=".state.PokerService"  android:exported="true"></service>
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.VIBRATE" />	
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT"></uses-permission>
+    <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT"></uses-permission>
 
+ 
     <uses-sdk android:minSdkVersion="3"/>
 </manifest>

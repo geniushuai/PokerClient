@@ -49,6 +49,8 @@ public class PokerButton extends ImageView {
 	
 	private float scaleWidth = 1;
 	private float scaleHeight = 1;
+	
+	private int userId;
 	/**
 	 * @param context
 	 */
@@ -131,20 +133,51 @@ public class PokerButton extends ImageView {
 	}
 
 	public void setSelected(boolean selectedFlag) {
-		int top = this.getTop();
-		int bottom = this.getBottom();
 		if (!allowSelect || this.selected == selectedFlag) {
 			return;
 		}
 		this.selected = selectedFlag;
-		if (this.selected) {
-			top -= 10;
-			bottom -= 10;
-		} else {
-			top += 10;
-			bottom += 10;
+		switch (userId) {
+		case 0:
+			int left = this.getLeft();
+			int right = this.getRight();
+			if (this.selected) {
+				left += 10;
+				right += 10;
+			} else {
+				left -= 10;
+				right -= 10;
+			}
+			this.layout(left, this.getTop(), right, this.getBottom());
+			break;
+		case 1:
+			int top = this.getTop();
+			int bottom = this.getBottom();
+			if (this.selected) {
+				top -= 10;
+				bottom -= 10;
+			} else {
+				top += 10;
+				bottom += 10;
+			}
+			this.layout(this.getLeft(), top, this.getRight(), bottom);
+			break;
+		case 2:
+			left = this.getLeft();
+			right = this.getRight();
+			if (this.selected) {
+				left -= 10;
+				right -= 10;
+			} else {
+				left += 10;
+				right += 10;
+			}
+			this.layout(left, this.getTop(), right, this.getBottom());
+			break;
+
+		default:
+			break;
 		}
-		this.layout(this.getLeft(), top, this.getRight(), bottom);
 	}
 
 	/**
@@ -178,11 +211,43 @@ public class PokerButton extends ImageView {
 	    scaleHeight=(float) (scaleHeight*scale);
 	    
 	    /* 产生reSize后的Bitmap对象 */
-	    Matrix matrix = new Matrix();  
+	    Matrix matrix = new Matrix();
+	    switch (userId) {
+		case 0:
+			matrix.setRotate(90);
+			this.setPadding(0, 0, 10, 0);
+			break;
+		case 1:
+			matrix.setRotate(0);
+			this.setPadding(0, 10, 0, 0);
+			break;
+		case 2:
+			matrix.setRotate(-90);
+			this.setPadding(10, 0, 0, 0);
+			break;
+		default:
+			matrix.setRotate(0);
+			break;
+		}
 	    matrix.postScale(scaleWidth, scaleHeight); 
 	    Bitmap resizeBmp = Bitmap.createBitmap(bitmap,0,0,bmpWidth,
                 bmpHeight,matrix,true);
 		return resizeBmp;
 	}
 
+	/**
+	 * @return the userId
+	 */
+	public int getUserId() {
+		return userId;
+	}
+
+	/**
+	 * @param userId the userId to set
+	 */
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+
+	
 }

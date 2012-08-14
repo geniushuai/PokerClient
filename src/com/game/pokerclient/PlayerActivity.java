@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.game.model.database.PlayerDataSource;
+import com.game.pokerclient.constant.GameConstant;
 import com.game.pokerclient.model.Player;
 
 /**
@@ -37,7 +38,6 @@ public class PlayerActivity extends BaseActivity implements OnClickListener{
 	private Button btnAddUser;
 	private Button btnLogin;
 	
-	private final static String PREFS_NAME = "com.game.pokerclient";
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -117,7 +117,7 @@ public class PlayerActivity extends BaseActivity implements OnClickListener{
 	}
 	
 	private void startGame(Player player) {
-		final SharedPreferences prefs = getContext().getSharedPreferences(PREFS_NAME, 0);
+		final SharedPreferences prefs = getContext().getSharedPreferences(GameConstant.PREFS_NAME, 0);
 		Editor editor = prefs.edit();
 		editor.putString("userName", player.getName());
 		editor.commit();

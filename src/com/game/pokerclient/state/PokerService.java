@@ -8,7 +8,6 @@
 package com.game.pokerclient.state;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import android.app.Service;
@@ -134,6 +133,15 @@ public class PokerService extends Service {
             }
         }
 		return playerPokers;
+	}
+	
+	public String getHidePokers() {
+		StringBuilder builder = new StringBuilder();
+		for (int i = 0; i < FightLandlordPoker.handlePokers.length; i++) {
+			builder.append(FightLandlordPoker.handlePokers[i].getValue() + ",");
+		}
+		builder.deleteCharAt(builder.length() - 1).toString();
+		return builder.toString();
 	}
 
 	public class PokerBinder extends Binder {

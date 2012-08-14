@@ -11,8 +11,6 @@
         android:layout_alignParentTop="true"
         android:text="@string/btn_start" />
 
-        <include layout="@layout/button_bar" android:id="@+id/buttonsBar"/>
-
     <FrameLayout
         android:id="@+id/dealedLayout"
         android:layout_width="match_parent"
@@ -48,12 +46,8 @@
             android:layout_marginRight="60dp"  >
         </FrameLayout>
 
-        <include
-            android:id="@+id/processBar"
-            layout="@layout/progress_bar" />
-
     </FrameLayout>
-
+
     <FrameLayout
         android:id="@+id/candidatedLeft"
         android:layout_width="wrap_content"
@@ -63,38 +57,38 @@
         android:layout_marginTop="20dp" >
 
     </FrameLayout>
-
+
     <FrameLayout
         android:id="@+id/candidatedRight"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
+        android:layout_gravity="right"
         android:layout_marginBottom="20dp"
-        android:layout_marginTop="20dp"
-        android:orientation="vertical" >
+        android:layout_marginTop="20dp" >
 
     </FrameLayout>
-
+
     <LinearLayout
         android:id="@+id/candidatedTop"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:padding="10dp"
-		android:layout_centerHorizontal="true" >
+        android:layout_marginLeft="120dp"
+        android:layout_marginRight="120dp"
+        android:gravity="center_horizontal" >
 
     </LinearLayout>
-
+
     <FrameLayout
         android:id="@+id/candidatedDown"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignTop="@+id/buttonsBar"
         android:layout_centerHorizontal="true"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:gravity="bottom" >
+        android:layout_marginLeft="120dp"
+        android:layout_marginRight="120dp"
+        android:gravity="center_horizontal">
 
     </FrameLayout>
 
@@ -105,5 +99,61 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:text="Welcome," />
+
+    <LinearLayout
+        android:id="@+id/controlBarLeft"
+        android:layout_width="35dp"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center_vertical"
+        android:orientation="vertical" >
+
+    </LinearLayout>
+    
+    <LinearLayout
+        android:id="@+id/controlBarRight"
+        android:layout_width="35dp"
+        android:layout_height="fill_parent"
+        android:gravity="center_vertical" 
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical" >
+
+    </LinearLayout>
+    
+    <LinearLayout
+        android:id="@+id/controlBarButtom"
+        android:layout_width="fill_parent"
+        android:layout_height="35dp"
+        android:gravity="center_horizontal" 
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:orientation="horizontal" >
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvConsole"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="20dp" />
+
+    <TextView
+        android:id="@+id/tvPoint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="50dp" />
 
 </RelativeLayout>

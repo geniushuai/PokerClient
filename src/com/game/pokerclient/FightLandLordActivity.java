@@ -7,7 +7,6 @@
  */
 package com.game.pokerclient;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +15,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.view.Gravity;
 import android.view.View;
@@ -25,15 +25,15 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.game.model.fightlandlord.FightLandlordPoker;
 import com.game.pokerclient.component.PokerButton;
 import com.game.pokerclient.constant.GameConstant;
+import com.game.pokerclient.model.FightLandlordGameStatus;
 import com.game.pokerclient.state.PokerService;
-import com.game.pokerclient.thread.ProcessTask;
+import com.game.pokerclient.thread.PlayerHandler;
+import com.game.pokerclient.thread.PlayerTask;
 
 /**
  * Class Description
@@ -52,13 +52,22 @@ public class FightLandLordActivity extends BaseActivity implements OnClickListen
 	private FrameLayout framelayout;
 	private Button btnRun;
 	private PokerService pokerService;
-	private final static int OFFSET_SIZE = 10;
-	private ArrayList<String> data;
-	private ProgressBar pb;
-	private TextView tv;
 
 	private ServiceConnection serviceConnection;
+	
+	private int settingTimes = 0;
+	
+	private String settingLabel;
+	
+	private int firstUserId;
+	
+	private int playerUserId;
+	
 
+	public static final int[] CONTROL_BARS = {R.id.controlBarLeft, R.id.controlBarButtom, R.id.controlBarRight};
+	public static final int[] CANDIDATED_BOXS = {R.id.candidatedLeft, R.id.candidatedDown, R.id.candidatedRight};
+	public static final int[] DEALED_BOXS = {R.id.dealedLeft, R.id.dealedBottom, R.id.dealedRight};
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -83,6 +92,7 @@ public class FightLandLordActivity extends BaseActivity implements OnClickListen
 
 			public void onServiceDisconnected(ComponentName name) {
 				pokerService = null;
+				
 			}
 		};
 		
@@ -95,18 +105,6 @@ public class FightLandLordActivity extends BaseActivity implements OnClickListen
 		textView.setText("Welcome," + userName);
 		btnRun = (Button) findViewById(R.id.btnRun);
 		btnRun.setOnClickListener(this);
-		
-		LinearLayout btnBar = (LinearLayout) findViewById(R.id.buttonsBar);
-		for (int i = 0; i < btnBar.getChildCount(); i++) {
-			if (btnBar.getChildAt(i) instanceof Button) {
-				Button button = (Button)btnBar.getChildAt(i);
-				button.setOnClickListener(this);
-			}
-		}
-		
-		pb=(ProgressBar)findViewById(R.id.pb);  
-		tv=(TextView)findViewById(R.id.tv);
-		
 	}
 
 	/*
@@ -122,13 +120,6 @@ public class FightLandLordActivity extends BaseActivity implements OnClickListen
 				startService(intent);
 				bindService(intent, serviceConnection, BIND_AUTO_CREATE);
 				btnRun.setText(R.string.btn_restart);
-				
-				data = new ArrayList<String>(); 
-				ProcessTask processTask = new ProcessTask();
-				processTask.setActivity(this);
-				processTask.setPb(pb);
-				processTask.setTv(tv);
-				processTask.execute(100);
 			} else {
 				reset();
 				Intent intent = new Intent(this, PokerService.class);
@@ -137,112 +128,89 @@ public class FightLandLordActivity extends BaseActivity implements OnClickListen
 			}
 		}
 
-		if (view == findViewById(R.id.btnOut)) {
-			outPoker();
-		} else if (view == findViewById(R.id.btnReset)) {
-			resetPoker();
-		}
 	}
 	
 	private void reset() {
-		RelativeLayout layout = (RelativeLayout) findViewById(R.id.main_layout);
-		removeChild(layout);
 		LinearLayout linearLayout = (LinearLayout)findViewById(R.id.candidatedTop);
 		linearLayout.removeAllViews();
+		
+		TextView tvConsole = (TextView) findViewById(R.id.tvConsole);
+		tvConsole.setText("");
+
+		TextView tvPoint = (TextView) findViewById(R.id.tvPoint);
+		tvPoint.setText("");
+		
+		for (int id : CONTROL_BARS) {
+			ViewGroup view = (ViewGroup) findViewById(id);
+			view.removeAllViews();
+		}
+
+		for (int id : DEALED_BOXS) {
+			ViewGroup view = (ViewGroup) findViewById(id);
+			view.removeAllViews();
+		}
+
+		for (int id : CANDIDATED_BOXS) {
+			ViewGroup view = (ViewGroup) findViewById(id);
+			view.removeAllViews();
+		}
+		
+		setSettingTimes(0);
 	}
 	
-	private void removeChild(ViewGroup layout) {
-		for (int i = 0; i < layout.getChildCount(); i++) {
-			View view = layout.getChildAt(i);
-			if (view instanceof FrameLayout) {
-				framelayout = (FrameLayout)view;
-				removeChild(framelayout);
-			} else {
-				framelayout.removeAllViews();
-			}
-		}
-	}
 	
-	private void resetPoker() {
-		FrameLayout candidatedDown = (FrameLayout) findViewById(R.id.candidatedDown);
-		for (int i = 0; i < candidatedDown.getChildCount(); i++) {
-			PokerButton pokerButton = (PokerButton) candidatedDown.getChildAt(i);
-			pokerButton.setSelected(false);
-		}
-	}
-	
-	private void outPoker() {
-		int y = 0;
-		FrameLayout dealedBottom = (FrameLayout) findViewById(R.id.dealedBottom);
-		FrameLayout candidatedDown = (FrameLayout) findViewById(R.id.candidatedDown);
-		List<PokerButton> dealedCards = new ArrayList<PokerButton>();
-		List<PokerButton> unDealedCards = new ArrayList<PokerButton>();
-		// 记录出牌和未出牌
-		for (int i = 0; i < candidatedDown.getChildCount(); i++) {
-			PokerButton pokerButton = (PokerButton) candidatedDown.getChildAt(i);
-			if (pokerButton.isSelected()) {
-				pokerButton.setAllowSelect(false);
-				dealedCards.add(pokerButton);
-			} else {
-				unDealedCards.add(pokerButton);
-			}
-		}
-		// 重载手中牌区
-		candidatedDown.removeAllViews();
-		for (PokerButton pb : unDealedCards) {
-			FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) pb.getLayoutParams();
-			params.leftMargin = y+=OFFSET_SIZE;
-			pb.setLayoutParams(params);
-			candidatedDown.addView(pb);
-		}
-		// 更新出牌区
-		y = 0;
-		dealedBottom.removeAllViews();
-		for (PokerButton pb : dealedCards) {
-			FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) pb.getLayoutParams();
-			params.leftMargin = y+=OFFSET_SIZE;
-			pb.setLayoutParams(params);
-			dealedBottom.addView(pb);
-		}
-	}
 
 	private void initPoker(Map<Integer, String> playerPokers) {
+		
 		int x = 0;
-		RelativeLayout layout = (RelativeLayout) findViewById(R.id.main_layout);
-		for (int i = 0; i < layout.getChildCount(); i++) {
-			View view = layout.getChildAt(i);
-			if (view instanceof FrameLayout) {
-				if (view != findViewById(R.id.dealedLayout)) {
-					framelayout = (FrameLayout)view;
-					List<String> pks = FightLandlordPoker.sortPokers(playerPokers.get(x).replace(",first", ""));
-					int y = 0;
-					for (String pk : pks) {
-						PokerButton pokerButton = new PokerButton(this);
-						FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) pokerButton.getLayoutParams();
-						if (view == findViewById(R.id.candidatedDown)) {
-							params.leftMargin = y+=OFFSET_SIZE;
-						} else {
-							params.gravity = Gravity.TOP;
-							params.topMargin = y+=OFFSET_SIZE;
-							pokerButton.setAllowSelect(false);
-						}
-						pokerButton.setLayoutParams(params);
-						pokerButton.setValue(pk);
-						if (pk.equalsIgnoreCase("first")) {
-							continue;
-						}
-						pokerButton.setImage(pk);
-						framelayout.addView(pokerButton);
-					}
-					x++;
-				}
+		for (int id : CANDIDATED_BOXS) {
+			framelayout = (FrameLayout) findViewById(id);
+			List<String> pks = FightLandlordPoker.sortPokers(playerPokers.get(x).replace(",first", ""));
+			if (playerPokers.get(x).indexOf(",first") > 0) {
+				Handler playerHandler = new PlayerHandler(getContext());
+				PlayerTask playerTask = new PlayerTask(playerHandler);
+				playerTask.execute(FightLandlordGameStatus.GAME_SETTING_UPDATE.name(), String.valueOf(x));
 			}
+			int y = 0;
+			for (String pk : pks) {
+				PokerButton pokerButton = new PokerButton(this);
+				FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) pokerButton.getLayoutParams();
+				switch (id) {
+				case R.id.candidatedLeft:
+					params.gravity = Gravity.TOP;
+					params.topMargin = y+=GameConstant.OFFSET_SIZE;
+					pokerButton.setUserId(0);
+					break;
+				case R.id.candidatedDown:
+					params.leftMargin = y+=GameConstant.OFFSET_SIZE;
+					pokerButton.setUserId(1);
+					break;
+				case R.id.candidatedRight:
+					params.gravity = Gravity.BOTTOM;
+					params.bottomMargin = y+=GameConstant.OFFSET_SIZE;
+					pokerButton.setUserId(2);
+					break;
+
+				default:
+					break;
+				}
+				pokerButton.setLayoutParams(params);
+				pokerButton.setValue(pk);
+				pokerButton.setImage(pk);
+				framelayout.addView(pokerButton);
+			}
+			x++;
 		}
 		// 3张底牌
 		LinearLayout linearLayout = (LinearLayout)findViewById(R.id.candidatedTop);
 		String pks[] = {"back", "back", "back"};
 		for (String pk : pks) {
 			PokerButton pokerButton = new PokerButton(this);
+			pokerButton.setUserId(-1);
+			ViewGroup.LayoutParams params = pokerButton.getLayoutParams();
+			params.width = 70;
+			params.height = 100;
+			pokerButton.setLayoutParams(params);
 			pokerButton.setAllowSelect(false);
 			pokerButton.setValue(pk);
 			pokerButton.setImage(pk);
@@ -264,6 +232,72 @@ public class FightLandLordActivity extends BaseActivity implements OnClickListen
 			serviceConnection = null;
 		}
 	}
+
+	/**
+	 * @return the settingTimes
+	 */
+	public int getSettingTimes() {
+		return settingTimes;
+	}
+
+	/**
+	 * @param settingTimes the settingTimes to set
+	 */
+	public void setSettingTimes(int settingTimes) {
+		this.settingTimes = settingTimes;
+	}
+
+	/**
+	 * @return the settingLabel
+	 */
+	public String getSettingLabel() {
+		return settingLabel;
+	}
+
+	/**
+	 * @param settingLabel the settingLabel to set
+	 */
+	public void setSettingLabel(String settingLabel) {
+		this.settingLabel = settingLabel;
+	}
+
+	/**
+	 * @return the firstUserId
+	 */
+	public int getFirstUserId() {
+		return firstUserId;
+	}
+
+	/**
+	 * @param firstUserId the firstUserId to set
+	 */
+	public void setFirstUserId(int firstUserId) {
+		this.firstUserId = firstUserId;
+	}
+
+	/**
+	 * @return the pokerService
+	 */
+	public PokerService getPokerService() {
+		return pokerService;
+	}
+
+	/**
+	 * @return the playerUserId
+	 */
+	public int getPlayerUserId() {
+		return playerUserId;
+	}
+
+	/**
+	 * @param playerUserId the playerUserId to set
+	 */
+	public void setPlayerUserId(int playerUserId) {
+		this.playerUserId = playerUserId;
+	}
 	
+	
+
 }
+
 
