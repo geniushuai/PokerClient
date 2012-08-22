@@ -59,6 +59,8 @@ public class FightLandLordActivity extends BaseActivity implements OnClickListen
 	
 	private String settingLabel;
 	
+	private String settingLabel1st;
+	
 	private int firstUserId;
 	
 	private int playerUserId;
@@ -294,6 +296,20 @@ public class FightLandLordActivity extends BaseActivity implements OnClickListen
 	 */
 	public void setPlayerUserId(int playerUserId) {
 		this.playerUserId = playerUserId;
+	}
+
+	/**
+	 * @return the settingLabel1st
+	 */
+	public String getSettingLabel1st() {
+		return settingLabel1st;
+	}
+
+	/**
+	 * @param settingLabel1st the settingLabel1st to set
+	 */
+	public void setSettingLabel1st(String settingLabel1st) {
+		this.settingLabel1st = settingLabel1st;
 	}
 	
 	
